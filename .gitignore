@@ -2,3 +2,4 @@ node_modules/
 todo.txt
 config.json
 package.json
+build/bundle*
