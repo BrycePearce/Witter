@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+/*Placeholder text color*/
+::-webkit-input-placeholder { 
+    /* Chrome/Opera/Safari */
+  color: #1DA1F2;
+}
+
+
+.tweetContainer {
+display: flex;
+align-items:center;
+width: 588px;
+background: #E8F5FD;
+mix-blend-mode: normal;
+opacity: 1.00;
+border-radius: 3px;
+padding: 10px;
+}
+
+
+.tweetBox {
+font-family: "Roboto";
+font-style: normal;
+font-weight: normal;
+width:508px;
+height:38px;
+font-size: 13px;
+line-height: 100%;
+opacity: 1.00;
+border: 1px solid #C6E7FB;
+box-sizing: border-box;
+border-radius: 3px;
+margin-left: 5px;
+transition: all 0.0s ease;
+resize: none;
+}
+
+.tweetBoxFocus{
+height: 82px;
+}
+
+/*change placeholder text to gray whenever clicked*/
+textarea:focus::-webkit-input-placeholder {
+    color: #CCD6DD;
+}
+
+.avatarSmall {
+margin-left: 15px;
+margin-right: 8px;
+}
+
+.avatarSmallArea {
+border-radius: 3px;
+}

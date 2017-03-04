@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
+import General from './General';
 import { Router, Route, browserHistory, Redirect } from 'react-router';
 render((
   <Router history={browserHistory}>
-    <Route path="/" component={Search} />
-    <Route path="/details/:id" component={Details} />
+    <Route path="/" component={General} />
     <Redirect from="*" to="/"/>
 
   </Router>

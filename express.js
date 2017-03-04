@@ -7,13 +7,15 @@ const app = express();
 const path = require('path');
 var bodyParser = require('body-parser')
 var Sequelize = require('sequelize');
-var models = require('./models');
+var models = require('./models'); //database connection stuff (use it when you want to connect)
 
 
 //When the user submits the URL, it hits this app.use and deciphers it here. Make sure routes are below this.
 app.use(require('body-parser').urlencoded({
   extended: true
 }));
+//Same as above except for json
+app.use(require('body-parser').json({}));
 
 
 //set port (local environment variable is not set yet)
@@ -23,7 +25,7 @@ app.set('port', process.env.PORT || 1337);
 app.disable('x-powered-by');
 
 //error "catch all"
-function errorHandler (err, req, res, next) {
+function errorHandler(err, req, res, next) {
   res.status(500)
   res.render('error', { error: err })
 }
@@ -35,16 +37,15 @@ app.use("/", express.static(path.resolve(__dirname, 'build/')));
 app.post('/', function (req, res) {
   console.log(req.body);
   models.Tweet.create({
-    tweet: req.body.tweet
+    tweet: req.body.value
   }).then(function (Tweet) {
-    // do something after creation
-    console.log()
-    return res.sendStatus(201);
+    //returning Tweet object good practice
+    return res.status(201).send({success: true, Tweet: Tweet});
   });
 });
 
 //send main page if bad route hit (route hit app.js, then hits this route)
-app.get('*', function(req, res) {
+app.get('*', function (req, res) {
   res.sendFile(path.resolve(__dirname + '/build/index.html'));
 });
 
