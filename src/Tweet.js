@@ -15,8 +15,7 @@ class Tweet extends React.Component {
 
   /*can probably use this for the number of characters available: https://facebook.github.io/react/docs/forms.html */
   handleChange(event) {
-    //console.log(event);
-    this.setState({ value: event.target.value });
+    this.setState({value: event.target.value});
   }
 
 
@@ -59,6 +58,8 @@ class Tweet extends React.Component {
           <img className="avatarSmallArea" src={AvatarSmall} />
         </div>
         <textarea
+          value={this.state.value} 
+          onChange={this.handleChange}
           onFocus={this.handleExpand}
           onBlur={this.handleExpand}
           className={'tweetBox ' + this.state.clicked}

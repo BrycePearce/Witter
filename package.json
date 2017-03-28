@@ -1,0 +1,44 @@
+{
+  "name": "witter",
+  "version": "1.0.0",
+  "description": "Twitter clone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon express --ignore src/ --ignore build/",
+    "build-watch": "webpack --color --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrycePearce/Witter.git"
+  },
+  "keywords": [
+    "witter"
+  ],
+  "author": "Bryce Pearce",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrycePearce/Witter/issues"
+  },
+  "homepage": "https://github.com/BrycePearce/Witter#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.1",
+    "passport": "^0.3.2",
+    "pg": "^6.1.2",
+    "pg-hstore": "^2.3.2",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-router": "^3.0.2",
+    "sequelize": "^3.30.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.2.*",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.5.*",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.2.1"
+  }
+}
