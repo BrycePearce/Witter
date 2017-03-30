@@ -38,8 +38,7 @@ function errorHandler(err, req, res, next) {
 }
 
 app.post('/', function (req, res) {
-  console.log(req);
-  console.log(req.body);
+  console.log("Your sent a tweet! Your tweet: " + req.body.value);
   db.Tweet.create({
     tweet: req.body.value
   }).then(function (Tweet) {
