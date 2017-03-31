@@ -1,6 +1,7 @@
 'use strict';
 
 const pg = require('pg'); //Non-blocking PostgreSQL client for node.js.
+console.log(__dirname);
 const express = require('express');
 const router = express.Router(); //handles the routing of incoming requests
 const app = express();
@@ -38,7 +39,8 @@ function errorHandler(err, req, res, next) {
 }
 
 app.post('/', function (req, res) {
-  console.log("Your sent a tweet! Your tweet: " + req.body.value);
+  console.log(req);
+  console.log(req.body);
   db.Tweet.create({
     tweet: req.body.value
   }).then(function (Tweet) {
