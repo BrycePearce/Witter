@@ -10,6 +10,8 @@ var passport = require('passport');
 var passportConfig = require('./config/passport');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var sequelize = require('sequelize');
+
 //var home = require('./routes/home');
 //var application = require('./routes/application');
 
@@ -28,7 +30,7 @@ app.use(require('body-parser').urlencoded({
 app.use(require('body-parser').json({}));
 
 app.use(cookieParser());
-app.use(session({secret: 'temp secret', resave: false, saveUninitialized: true,}));
+app.use(session({ secret: 'temp secret', resave: false, saveUninitialized: true, }));
 app.use(passport.initialize());
 app.use(passport.session());
 //app.use(app.router);
@@ -40,20 +42,25 @@ function errorHandler(err, req, res, next) {
 }
 
 //route for landing page (indexAuth.js route file)
-app.get('/', routes.index);
-
+app.get('/', (req, res) => {
+  return res.json("Hello");
+});
 //create user tables for authentication in database
+//why is that forced?
 db
   .sequelize
-  .sync()
-  .then(function(err) {
-	if (err) {
-		throw err[0]
-	} else {
-		http.createServer(app).listen(app.get('port'), function(){
-			console.log('Express is listening on port ' + app.get('port'))
-		});
-	}
-}).catch((something) => {
-  console.log(something);
+  .sync({force: true})
+  .then(function () {
+    
+    db.User.find({ where: { username: 'admin' } }).then(function (user) {
+      if (!user) {
+        db.User.create({username: 'admin', password: 'admin'});
+      }
+    });
+
+    app.listen(app.get('port'), function () {
+      console.log("Express started on port: " + app.get('port'));
+    });
+  }).catch((err) => {
+    console.log('[error]', err);
   });

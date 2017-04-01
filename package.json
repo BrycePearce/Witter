@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/BrycePearce/Witter#readme",
   "dependencies": {
-    "bcryptjs": "*",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "*",
     "cookie-parser": "^1.4.3",
     "errorhandler": "^1.5.0",
