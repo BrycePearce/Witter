@@ -3,7 +3,6 @@
 var express = require('express');
 var routes = require('./routes');
 var app = express();
-//var user = require('./routes/user');
 var db = require('./models');
 var http = require('http');
 var passport = require('passport');
@@ -12,8 +11,6 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var sequelize = require('sequelize');
 
-//var home = require('./routes/home');
-//var application = require('./routes/application');
 
 app.use('/public', express.static(__dirname + '/public'));
 
@@ -41,12 +38,34 @@ function errorHandler(err, req, res, next) {
   res.render('error', { error: err })
 }
 
-//route for landing page (indexAuth.js route file)
-app.get('/', (req, res) => {
-  return res.json("Hello");
+//Register route
+app.post('/user/register', function(req, res) {
+  db.User.create({username: req.body.username, password: req.body.password}).then((user) => {
+    //if user object exists, user has been created. (Untested, need to add failure
+    //cases in the db (e.g. unique = false) and check later)
+    if (user) {
+      return res.status(200).json({success: true});
+    } else {
+      return res.status(400).json({success: false});
+    }
+  });
 });
+
+
+//Authentication route, if success post true (handle errors later)
+app.post('/user/auth', passport.authenticate('local'), function(req, res) {
+  return res.status(200).json({success: true});
+});
+//Signout route
+app.get('/user/logout', function(req, res){
+  req.logout();
+  //send user back to home page on signout
+  res.redirect('/');
+});
+
 //create user tables for authentication in database
-//why is that forced?
+//**note: (force:true on sync deletes all users and recreates tables)**
+
 db
   .sequelize
   .sync({force: true})
