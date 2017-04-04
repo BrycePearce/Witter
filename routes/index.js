@@ -1,9 +1,3 @@
-var express = require('express');
-var router = express.Router();
-
-//get Homepage
-router.get('/', function (req, res) {
-  res.render('index');
-});
-
-module.exports = router;
+exports.index = function (req, res) {
+  res.render("login.ejs");
+}
