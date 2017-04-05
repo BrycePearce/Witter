@@ -5,15 +5,14 @@ var routes = require('./routes');
 var app = express();
 var db = require('./models');
 var http = require('http');
+var path = require('path');
 var passport = require('passport');
-var passportConfig = require('./config/passport');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var sequelize = require('sequelize');
 
-app.use('/public', express.static(__dirname + '/public'));
-
-app.set('views', __dirname + '/views');
+//Expose public folder, used to import Static assets, such as scripts/images/css/etc
+app.use("/", express.static(path.resolve(__dirname, 'build/')));
 
 app.set('port', process.env.PORT || 8080);
 
@@ -36,6 +35,17 @@ function errorHandler(err, req, res, next) {
   res.render('error', { error: err })
 }
 
+//tweet route
+app.post('/', function (req, res) {
+  console.log("Your sent a tweet! Your tweet: " + req.body.value);
+  db.Tweet.create({
+    tweet: req.body.value
+  }).then(function (Tweet) {
+    //returning Tweet object good practice
+    return res.status(201).send({success: true, Tweet: Tweet});
+  });
+});
+
 //Register route
 app.post('/user/register', function (req, res) {
   db.User.create({ username: req.body.username, password: req.body.password }).then((user) => {
@@ -54,6 +64,7 @@ app.post('/user/register', function (req, res) {
 app.post('/user/auth', passport.authenticate('local'), function (req, res) {
   return res.status(200).json({ success: true });
 });
+
 //Signout route
 app.get('/user/logout', function (req, res) {
   req.logout();
@@ -63,6 +74,12 @@ app.get('/user/logout', function (req, res) {
 
 //create user tables for authentication in database
 //**note: (force:true on sync deletes all users and recreates tables)**
+
+//send main page if bad route hit (route hit app.js, then hits this route)
+app.get('*', function (req, res) {
+  res.sendFile(path.resolve(__dirname + '/build/index.html'));
+});
+
 
 db
   .sequelize

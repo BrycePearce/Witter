@@ -21,21 +21,21 @@ class Tweet extends React.Component {
 
   handleSubmit() {
     console.log("Welcome to handleSubmit, your Wit = " + this.state.value);
-    console.log(event);
-
+    console.log(this.state);
+    
     fetch("/", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify({value: this.state.value})
     })
       //decode
       .then(res => res.json())
 
       .then(res => {
         //TODO:
-        //set the state with the result, then display it on feed
+        //set the state with the result, then display it on Witter feed
         console.log(res);
       });
   }
@@ -65,7 +65,7 @@ class Tweet extends React.Component {
           className={'tweetBox ' + this.state.clicked}
           placeholder="What's happening?" />
         <button
-          type="button"
+          type="submit"
           className="witButton"
           onClick={this.handleSubmit}>Wit</button>
       </div>
