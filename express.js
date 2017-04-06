@@ -10,6 +10,7 @@ var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var sequelize = require('sequelize');
+var passportConfig = require('./config/passport');
 
 //Expose public folder, used to import Static assets, such as scripts/images/css/etc
 app.use("/", express.static(path.resolve(__dirname, 'build/')));
@@ -41,8 +42,17 @@ app.post('/', function (req, res) {
   db.Tweet.create({
     tweet: req.body.value
   }).then(function (Tweet) {
-    //returning Tweet object good practice
-    return res.status(201).send({success: true, Tweet: Tweet});
+    /*
+     * can also use getTasks here. which will be helpful in the future for getting all the tweets of a user *****
+     */
+
+    //add association addTweet, sent from user.js, to user. (this will update userId column, which specifies which user sent a tweet)
+    req.user.addTweet(Tweet).then(function () {
+      //this line just makes userId show up in postman, don't need it for anything else
+      Tweet.UserId = req.user.id;
+      //return status, included Tweet object as good practice dictates
+      return res.status(201).send({ success: true, Tweet: Tweet });
+    })
   });
 });
 
@@ -85,7 +95,6 @@ db
   .sequelize
   .sync({ force: true })
   .then(function () {
-
     db.User.find({ where: { username: 'admin' } }).then(function (user) {
       if (!user) {
         db.User.create({ username: 'admin', password: 'admin' });
