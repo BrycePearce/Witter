@@ -21,14 +21,13 @@ module.exports = function (sequelize, DataTypes) {
           });
         },
         associate: function (models) {
-          console.log(models);
-          //associate every tweet to having one author
-           //User.hasMany(models.Tweet, {as: "Author"});
-          // One-way associations does not work
-          //models.Tweet.hasOne(models.User);
+          //associations can be defined here
+
+          //associate every tweet to having one author 
+          //(as: "tweets" here creates the .addTweet [the name addTweet is automatically created] we use in our tweet route in the express file)
+          //it also tells sequelize to create the userId column in tweets (which will be assigned a number only when we assign a user to it, which we do in the tweet route with req.user.addTweet(Tweet))
+          User.hasMany(models.Tweet, { as: "tweets" });
         }
-
-
       }
     });
   //before we create the user, hash the password (salt/hash)
