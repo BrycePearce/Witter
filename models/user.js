@@ -19,8 +19,16 @@ module.exports = function (sequelize, DataTypes) {
               return done(null, false);
             }
           });
-          // associations can be defined here
+        },
+        associate: function (models) {
+          console.log(models);
+          //associate every tweet to having one author
+           //User.hasMany(models.Tweet, {as: "Author"});
+          // One-way associations does not work
+          //models.Tweet.hasOne(models.User);
         }
+
+
       }
     });
   //before we create the user, hash the password (salt/hash)
