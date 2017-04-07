@@ -1,4 +1,5 @@
 import React from 'react';
+import Signup from './Signup';
 
 class SignupContainer extends React.Component {
   render() {

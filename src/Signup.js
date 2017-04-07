@@ -33,7 +33,9 @@ class Signup extends React.Component {
       body: JSON.stringify({
         username: this.state.usernameValue,
         password: this.state.passwordValue
-      })
+      }),
+      credentials: 'same-origin' //this sends cookie/session, need if you want login to work outside of postman
+
     })
       //decode
       .then(res => res.json())

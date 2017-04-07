@@ -33,7 +33,8 @@ class Login extends React.Component {
       body: JSON.stringify({
         username: this.state.usernameLogin,
         password: this.state.passwordLogin
-      })
+      }),
+      credentials: 'same-origin' //this sends cookie/session, need if you want login to work outside of postman
     })
       //decode
       .then(res => res.json())

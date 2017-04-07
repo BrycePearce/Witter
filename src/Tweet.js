@@ -28,7 +28,8 @@ class Tweet extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({value: this.state.value})
+      body: JSON.stringify({value: this.state.value}),
+      credentials: 'same-origin' //this sends cookie/session, need if you want login to work outside of postman
     })
       //decode
       .then(res => res.json())
