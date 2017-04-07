@@ -45,7 +45,10 @@ app.post('/', function (req, res) {
     /*
      * can also use getTasks here. which will be helpful in the future for getting all the tweets of a user *****
      */
-
+    console.log("...............................");
+    console.log(Tweet.UserId);
+    console.log(req);
+    console.log("...............................");
     //add association addTweet, sent from user.js, to user. (this will update userId column, which specifies which user sent a tweet)
     req.user.addTweet(Tweet).then(function () {
       //this line just makes userId show up in postman, don't need it for anything else
