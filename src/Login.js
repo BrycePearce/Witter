@@ -1,13 +1,13 @@
 import React from 'react';
 
 //Good example for CSS of signup page http://codepen.io/mikepro4/full/pvKYZG/
-class Signup extends React.Component {
+class Login extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      usernameValue: '', //initialize user/pass
-      passwordValue: ''
+      usernameLogin: '', //initialize user/pass
+      passwordLogin: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,20 +22,19 @@ class Signup extends React.Component {
 
   handleSubmit() {
     console.log("welcome to handleSubmit");
-    console.log(this.state.usernameValue);
-    console.log(this.state.passwordValue);
+    console.log(this.state.usernameLogin);
+    console.log(this.state.passwordLogin);
 
-    fetch("/user/register", {
+    fetch("/user/auth", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.usernameValue,
-        password: this.state.passwordValue
+        username: this.state.usernameLogin,
+        password: this.state.passwordLogin
       }),
       credentials: 'same-origin' //this sends cookie/session, need if you want login to work outside of postman
-
     })
       //decode
       .then(res => res.json())
@@ -51,14 +50,14 @@ class Signup extends React.Component {
       <div className="signupSheetContainer">
         <input
           className="signupUsername"
-          name="usernameValue"
+          name="usernameLogin"
           value={this.state.value} //need to log this
           onChange={this.handleChange}
           placeholder="Username" />
 
         <input
           className="signupPassword"
-          name="passwordValue"
+          name="passwordLogin"
           value={this.state.value}
           onChange={this.handleChange}
           placeholder="Password" />
@@ -66,9 +65,9 @@ class Signup extends React.Component {
         <button
           type="button"
           className="witButton"
-          onClick={this.handleSubmit}>Create Account</button>
+          onClick={this.handleSubmit}>Log in</button>
       </div>
     )
   }
 }
-export default Signup;
+export default Login;
