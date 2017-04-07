@@ -58,7 +58,7 @@ app.post('/', function (req, res) {
     })
   });
 });
-
+ 
 //Register route
 app.post('/user/register', function (req, res) {
   db.User.create({ username: req.body.username, password: req.body.password }).then((user) => {
