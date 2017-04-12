@@ -1,10 +1,10 @@
 const path = require('path');
 
 const BUILD_DIR = path.resolve(__dirname, 'build/');
-
+//process.traceDeprecation = true;
 module.exports = {
     devtool: 'source-map',
-    entry: './src/app.js',
+    entry: './components/Router.js',
     output: {
         path: BUILD_DIR,
         filename: 'bundle.js'

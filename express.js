@@ -45,7 +45,6 @@ app.post('/', function (req, res) {
     /*
      * can also use getTasks here. which will be helpful in the future for getting all the tweets of a user *****
      */
-
     //add association addTweet, sent from user.js, to user. (this will update userId column, which specifies which user sent a tweet)
     req.user.addTweet(Tweet).then(function () {
       //this line just makes userId show up in postman, don't need it for anything else
@@ -77,10 +76,36 @@ app.post('/user/auth', passport.authenticate('local'), function (req, res) {
 
 //Signout route
 app.get('/user/logout', function (req, res) {
-  req.logout();
+  //***check to see if user is logged in when they logout, probably remove this later, and don't have logout appear when user is logged in***
+  if (req.user === undefined) {
+    console.log("You're not logged in, silly!");
+    return res.status(400).json({ success: false });
+  } else {
+    console.log("Logged you out " + req.user.dataValues.username + ", have a nice day!");
+    req.logout();
+    return res.status(200).json({ success: true });
+  }
   //send user back to home page on signout
   res.redirect('/');
 });
+
+app.get('/api/user/:username', function (req, res) {
+  //we first need to get the userId by querying with the username we acquired in the fetch from UserPageContainer
+  //so here we query our "Users" table, and find the ID associated with the entered user. (id in 'Users' is userId in 'Tweets')
+  //**note: User here is "user.js" from model, exported as User**
+  db.User.find({ where: { username: req.params.username } }).then(function (user) {
+    //We got the our userId (user) value from the Users table! Now we can find all the tweets with that id value..!
+    //We can do that with our helper function getTweets(), which is created when we do our "belongs to many" association http://docs.sequelizejs.com/en/latest/docs/associations/#belongs-to-many-associations
+    console.log("heyyyyyyyyyyyy");
+    console.log(user);
+    user.getTweets().then(function (tweets) {
+      console.log(".................");
+      console.log(tweets);
+      return res.status(200).send({ tweets: tweets });
+    })
+  });
+});
+
 
 //create user tables for authentication in database
 //**note: (force:true on sync deletes all users and recreates tables)**

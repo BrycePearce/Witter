@@ -27,6 +27,7 @@ module.exports = function (sequelize, DataTypes) {
           //(as: "tweets" here creates the .addTweet [the name addTweet is automatically created] we use in our tweet route in the express file)
           //it also tells sequelize to create the userId column in tweets (which will be assigned a number only when we assign a user to it, which we do in the tweet route with req.user.addTweet(Tweet))
           User.hasMany(models.Tweet, { as: "tweets" });
+
         }
       }
     });

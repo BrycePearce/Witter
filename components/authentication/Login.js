@@ -1,5 +1,4 @@
 import React from 'react';
-
 //Good example for CSS of signup page http://codepen.io/mikepro4/full/pvKYZG/
 class Login extends React.Component {
 
@@ -40,7 +39,6 @@ class Login extends React.Component {
       .then(res => res.json())
 
       .then(res => {
-        console.log(res);
       });
   }
 
@@ -70,4 +68,5 @@ class Login extends React.Component {
     )
   }
 }
+
 export default Login;

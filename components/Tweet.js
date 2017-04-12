@@ -1,5 +1,5 @@
 import React from 'react';
-import AvatarSmall from './static/avatarSmall.png';
+import AvatarSmall from './assets/avatarSmall.png';
 class Tweet extends React.Component {
 
   constructor(props) {
@@ -15,20 +15,20 @@ class Tweet extends React.Component {
 
   /*can probably use this for the number of characters available: https://facebook.github.io/react/docs/forms.html */
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({ value: event.target.value });
   }
 
 
   handleSubmit() {
     console.log("Welcome to handleSubmit, your Wit = " + this.state.value);
     console.log(this.state);
-    
+
     fetch("/", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({value: this.state.value}),
+      body: JSON.stringify({ value: this.state.value }),
       credentials: 'same-origin' //this sends cookie/session, need if you want login to work outside of postman
     })
       //decode
@@ -40,7 +40,7 @@ class Tweet extends React.Component {
         console.log(res);
       });
   }
-  
+
   //Handle how the tweetbox should react when being used
   handleExpand(click) {
     if (click.target.value.length === 0) {
@@ -59,7 +59,7 @@ class Tweet extends React.Component {
           <img className="avatarSmallArea" src={AvatarSmall} />
         </div>
         <textarea
-          value={this.state.value} 
+          value={this.state.value}
           onChange={this.handleChange}
           onFocus={this.handleExpand}
           onBlur={this.handleExpand}
