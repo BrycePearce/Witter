@@ -44,6 +44,8 @@ app.post('/', function (req, res) {
   }).then(function (Tweet) {
     /*
      * can also use getTasks here. which will be helpful in the future for getting all the tweets of a user *****
+     *
+     * TODO: assign anonymous user to req.user, if req.user isn't defined (so we don't have mega long errors, or invalid tweets)
      */
     //add association addTweet, sent from user.js, to user. (this will update userId column, which specifies which user sent a tweet)
     req.user.addTweet(Tweet).then(function () {
@@ -52,6 +54,8 @@ app.post('/', function (req, res) {
       //return status, included Tweet object as good practice dictates
       return res.status(201).send({ success: true, Tweet: Tweet });
     })
+  }).catch((err) => { //handle creation errors, such as null tweets
+    console.log('[error]\n', err.name, "\n", err.message);
   });
 });
 
@@ -91,16 +95,13 @@ app.get('/user/logout', function (req, res) {
 
 app.get('/api/user/:username', function (req, res) {
   //we first need to get the userId by querying with the username we acquired in the fetch from UserPageContainer
-  //so here we query our "Users" table, and find the ID associated with the entered user. (id in 'Users' is userId in 'Tweets')
+  //so here we query our "Users" table, and find the ID associated with the entered user. (we made id in 'Users' is the same as userId in 'Tweets' when we created the "belongs-to-many" association in our user model)
   //**note: User here is "user.js" from model, exported as User**
   db.User.find({ where: { username: req.params.username } }).then(function (user) {
     //We got the our userId (user) value from the Users table! Now we can find all the tweets with that id value..!
-    //We can do that with our helper function getTweets(), which is created when we do our "belongs to many" association http://docs.sequelizejs.com/en/latest/docs/associations/#belongs-to-many-associations
-    console.log("heyyyyyyyyyyyy");
-    console.log(user);
+    //We can do that with our helper function getTweets(), which is created when we do our "belongs-to-many" association http://docs.sequelizejs.com/en/latest/docs/associations/#belongs-to-many-associations
     user.getTweets().then(function (tweets) {
-      console.log(".................");
-      console.log(tweets);
+      //send off our object with tweets, which will be recieved by our get request in our UserPageContainer component.
       return res.status(200).send({ tweets: tweets });
     })
   });
