@@ -53,3 +53,9 @@ margin-right: 8px;
 .avatarSmallArea {
 border-radius: 3px;
 }
+
+.userTweets {
+display:inline-block;
+border: 1px solid #e6ecf0;
+cursor: pointer;
+}

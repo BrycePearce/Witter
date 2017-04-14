@@ -98,6 +98,10 @@ app.get('/api/user/:username', function (req, res) {
   //so here we query our "Users" table, and find the ID associated with the entered user. (we made id in 'Users' is the same as userId in 'Tweets' when we created the "belongs-to-many" association in our user model)
   //**note: User here is "user.js" from model, exported as User**
   db.User.find({ where: { username: req.params.username } }).then(function (user) {
+    //if you navigate to a userPage that doesn't exist, 404 && return false
+    if (!user) {
+      return res.status(404).json({ user: false });
+    }
     //We got the our userId (user) value from the Users table! Now we can find all the tweets with that id value..!
     //We can do that with our helper function getTweets(), which is created when we do our "belongs-to-many" association http://docs.sequelizejs.com/en/latest/docs/associations/#belongs-to-many-associations
     user.getTweets().then(function (tweets) {
