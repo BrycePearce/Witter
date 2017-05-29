@@ -24,3 +24,10 @@ export function removeComment(postId, i) {
     postId
   }
 }
+
+//keep track of current user
+export function user(name) {
+  return {
+     name
+  }
+}
