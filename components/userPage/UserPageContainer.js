@@ -39,14 +39,14 @@ class UserPageContainer extends React.Component {
      * TODO: 
      * 
      * 1.) 
-     * Use Redux to create a global state, so that I can determine if the current user is viewing is own userPage here. Also need it, so that it can check if the userpage exists.
+     * Use Redux to create a global state, so that I can determine if the current user is viewing his own userPage here.
      * https://egghead.io/courses/getting-started-with-redux
      * https://egghead.io/courses/building-react-applications-with-idiomatic-redux
      * 
      * 2.) 
      * give the userTweets li an onClick event so that is displays the tweet in a Modal
      */
-    console.log(this.state);
+    console.log(this.state.user);
     let tweetInfo = '';
     let usernamePage = this.props.params.username;
     if (this.state.user === false) {
