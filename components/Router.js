@@ -8,6 +8,8 @@ import { Router, Route, browserHistory, Redirect, IndexRoute } from 'react-route
 import { Provider } from 'react-redux';
 import store, { history } from '../store';
 
+
+//import css from '../styles/style.styl';
 import Main from './Main';
 import Single from './Single';
 import PhotoGrid from './PhotoGrid';
