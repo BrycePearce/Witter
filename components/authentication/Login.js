@@ -1,5 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from '../../actions/actionCreators';
+import LandingPageContainer from '../LandingPageContainer';
+
 //Good example for CSS of signup page http://codepen.io/mikepro4/full/pvKYZG/
+
+//redux to keep track of user
+function mapStateToProps(state) {
+  console.log("we are setting user to " + state.user.user);
+  return {
+    user: state.user.user
+  }
+}
+//connects functions in actionCreator and maps them to this.props, so it will become this.props.functionName() which we use in the componentDidMount
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
 class Login extends React.Component {
 
   constructor(props) {
@@ -39,11 +57,16 @@ class Login extends React.Component {
       .then(res => res.json())
 
       .then(res => {
+        // Injected by react-redux:
+        let { dispatch } = this.props;
+        this.props.user(this.state.usernameLogin);
+       // dispatch(action);
       });
   }
 
 
   render() {
+    let { dispatch } = this.props
     return (
       <div className="signupSheetContainer">
         <input
@@ -68,5 +91,5 @@ class Login extends React.Component {
     )
   }
 }
-
-export default Login;
+//if we are using redux in a component, export like this
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

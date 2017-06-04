@@ -22,7 +22,7 @@ function postComments(state = [], action) {
     default:
       return state;
   }
-  //return state;
+  //return state; (unreachable)
 }
 
 function comments(state = [], action) {

@@ -1,15 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom' //for componentDidMount
 import moment from 'moment';
+import { connect } from 'react-redux';
+import Login from '../authentication/Login';
 
+
+//redux to keep track of user
+function mapStateToProps(state) {
+  //we reference user from state.reducerName.value, so state.user.user
+  return {
+    user: state.user.user
+  }
+}
 class UserPageContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       tweets: [], //initalize tweets as empty (otherwise have to check this.state for null as well when we check tweets length)
       user: true
-  };
+    };
   }
 
   //this fetch queries out our userData for twwet
@@ -25,7 +35,6 @@ class UserPageContainer extends React.Component {
         //we just put the json value in the tweets spot -- (setting json = to tweets)
         //This way we can check for an empty length with just one statement, which we do below.
         //user is just to check to see if page exists, created in same /api/user/:username route.
-        console.log(json);
         this.setState({ tweets: json.tweets, user: json.user });
       });
     });
@@ -44,9 +53,8 @@ class UserPageContainer extends React.Component {
      * https://egghead.io/courses/building-react-applications-with-idiomatic-redux
      * 
      * 2.) 
-     * give the userTweets li an onClick event so that is displays the tweet in a Modal
+     * give the userTweets li an onClick event so that is displays the tweet in a Modal, similar to Twitter
      */
-    console.log(this.state.user);
     let tweetInfo = '';
     let usernamePage = this.props.params.username;
     if (this.state.user === false) {
@@ -84,12 +92,13 @@ class UserPageContainer extends React.Component {
     //need to update it to know the actual user
     return (
       <div className="UserPageContainer">
-
         <div className="userpageUsername">{usernamePage}'s page. </div>
         <div className="tweetSubmitter"> </div>
         <ul> {tweetInfo} </ul>
+        {console.log(this)}
+        You are viewing this page logged in as {this.props.user}
       </div>
     )
   }
 }
-export default UserPageContainer;
+export default connect(mapStateToProps)(UserPageContainer);

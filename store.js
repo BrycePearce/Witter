@@ -4,7 +4,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { browserHistory } from 'react-router';
 
 //import our user state hopefully from UserPageContainer (might need get this into data folder somehow)
-import user from './components/userPage/UserPageContainer';
+let user = {};
 
 import rootReducer from './reducers/index';
 
